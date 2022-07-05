@@ -6,18 +6,18 @@ The project consists to design the database based on the files attached, ingest 
 
 **The core functionality for this challenge is:**
 
-1. Design the E-R from the database and create the structure based on the files attached. 
-2. Ingest the data from the centos server to the postgres database. 
-3. At least the 'read' request must be supported for the API 
+1. Design the E-R from the database and create the structure based on the files attached.
+2. Ingest the data from the centos server to the postgres database.
+3. At least the 'read' request must be supported for the API
 4. The server where the API is going to be deployed must have access only to the postgres database. And the centos server must have access only to the postgres database as well.
 
 **Some optional functionalities you can implement:**
 
-1. Validate the column state has a length of 2 and only contains letters. 
-2. Your code could run on Docker as well. 
-3. Support more request than just 'read', like 'create' or 'update'. 
-4. Unit test and coverage of your code 
-5. Implement CI/CD 
+1. Validate the column state has a length of 2 and only contains letters.
+2. Your code could run on Docker as well.
+3. Support more request than just 'read', like 'create' or 'update'.
+4. Unit test and coverage of your code
+5. Implement CI/CD
 6. Implement a mechanism to create or update the schema
 
 ## E-R from the database
@@ -48,11 +48,31 @@ CREATE TABLE public.samples (
 
 ![image](https://user-images.githubusercontent.com/61101012/177244595-f8d4c125-aa91-405f-9a65-6f5bcd50071b.png)
 
+```bash
+su
+
+sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
+
+sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
+
+dnf swap centos-linux-repos centos-stream-repos
+
+yum install postgresql-server
+
+yum install wget
+
+wget --no-check-certificate 'https://drive.google.com/uc?id=1K3zaDLcjE130LiD27xlDaGgawBm9vtrM&authuser=0&export=download' -O sample.csv
+
+psql -h <<IP>> -p 5432 -U postgres postgres
+
+\copy public.samples from '/sample.csv' DELIMITER ',' CSV HEADER QUOTE '"';
+```
+
 ## Read API
 
 ![image](https://user-images.githubusercontent.com/61101012/177244806-9b41cfb6-87d2-4d75-9fa3-66215f3aada3.png)
 
-## Connection postgresql  with centos and API
+## Connection postgresql with centos and API
 
 ![image](https://user-images.githubusercontent.com/61101012/177244961-d22c67c8-52b9-45f0-b7df-83800272b3c3.png)
 
