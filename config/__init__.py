@@ -2,12 +2,15 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import dotenv_values
+import os
 
 # Obtiene valores del .env
 config = dotenv_values(".env")
 
 host = 'localhost'
-# host = config['PSQL_HOST']
+
+if os.environ.get('DOCKER_COMPOSE'):
+    host = config['PSQL_HOST']
 
 SQLALCHEMY_DATABASE_URL = "postgresql://{user}:{pasw}@{host}:{port}/{db}".format(
     user=config['PSQL_USER'],

@@ -23,6 +23,8 @@ services:
     hostname: api
     ports:
       - "7000:4000"
+    environment:
+      DOCKER_COMPOSE: "true"
     restart: always
     depends_on:
       - db
