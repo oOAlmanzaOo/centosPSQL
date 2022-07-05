@@ -46,7 +46,7 @@ CREATE TABLE public.samples (
 
 ## Ingest the data from the centos server to the postgres database
 
-![image](https://user-images.githubusercontent.com/61101012/177244595-f8d4c125-aa91-405f-9a65-6f5bcd50071b.png)
+**Centos config:**
 
 ```bash
 su
@@ -67,6 +67,8 @@ psql -h <<IP>> -p 5432 -U postgres postgres
 
 \copy public.samples from '/sample.csv' DELIMITER ',' CSV HEADER QUOTE '"';
 ```
+
+![image](https://user-images.githubusercontent.com/61101012/177244595-f8d4c125-aa91-405f-9a65-6f5bcd50071b.png)
 
 ## Read API
 
