@@ -1,0 +1,30 @@
+# Use postgres/example user/password credentials
+version: "3.8"
+
+services:
+  db:
+    container_name: db_postgres
+    image: postgres
+    environment:
+      MYSQL_DATABASE: sample
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./sql-data/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  centos:
+    image: centos
+    stdin_open: true
+
+  api-server:
+    build: .
+    container_name: api
+    hostname: api
+    ports:
+      - "7000:4000"
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db
